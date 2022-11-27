@@ -10,16 +10,18 @@
 
 import { str } from './moduleA.js'
 import { createApp, h } from 'vue'
+import App from './App.vue'
 
+// console.log('vite...' + str)
 
-console.log('vite...' + str)
+// const App = {
+//   render() {
+//     // create dom
+//     // <div><div>hello vite</div></div>
+//     return h('div', null, [h('div', null, String('hello Vite'))])
+//   }
+// }
 
-const App = {
-  render() {
-    // create dom
-    return h('div', null, [h('div', null, String('hello Vite'))])
-  }
-}
 
 createApp(App).mount('#app')
 
