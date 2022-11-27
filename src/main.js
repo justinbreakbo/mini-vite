@@ -11,6 +11,7 @@
 import { str } from './moduleA.js'
 import { createApp, h } from 'vue'
 import App from './App.vue'
+import './index.css'
 
 // console.log('vite...' + str)
 

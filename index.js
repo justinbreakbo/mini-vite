@@ -18,6 +18,8 @@ app.use(async ctx => {
   const { url, query } = ctx.request
   console.log('request url: ' + url)
 
+  // TODO: 策略模式优化
+
   // read html
   if (url === '/') {
     // to index.html
@@ -84,6 +86,24 @@ app.use(async ctx => {
     }
   }
 
+  // read css
+  else if (url.endsWith('.css')) {
+    const p = path.resolve(__dirname, url.slice(1))
+    let content = fs.readFileSync(p, 'utf-8')
+
+    // css => js (add style tag)
+    content = `
+      const css = "${content.replace(/[\r\n]/g, '')}"
+      const link = document.createElement('style')
+      link.setAttribute('type', 'text/css')
+      document.head.appendChild(link)
+      link.innerHTML = css
+      export default css
+    `
+    ctx.type = 'application/javascript'
+    ctx.body = content
+  }
+
 
   /* library support */
   function rewriteImport (content) {
@@ -96,7 +116,7 @@ app.use(async ctx => {
       }
     })
   }
-  
+
 })
 
 app.listen(3000, () => {
